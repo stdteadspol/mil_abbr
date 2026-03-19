@@ -1,35 +1,74 @@
-/* General Styles */
+/* Color Variables */
+:root {
+    --bg-color: #f4f1ea;        /* Light Sand */
+    --header-bg: #4b5320;      /* Military Olive */
+    --text-main: #2b2e1a;      /* Dark Forest Green */
+    --card-bg: #ffffff;
+    --accent-color: #6b8e23;    /* Olive Drab */
+    --footer-bg: #e0ddd5;
+    --input-bg: #ffffff;
+    --border-color: #bdc3c7;
+}
+
+[data-theme="dark"] {
+    --bg-color: #1b1c17;        /* Night Ops Green/Black */
+    --header-bg: #0d0e0a;
+    --text-main: #d4d9c7;       /* Sage Gray */
+    --card-bg: #25261f;
+    --accent-color: #8da47e;
+    --footer-bg: #141511;
+    --input-bg: #2d2e24;
+    --border-color: #444;
+}
+
+/* Base Styles */
 body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background-color: #f0f2f5;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
     margin: 0;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-}
-header {
-    background-color: #3b4d36;
-    color: white;
-    /* Reduced from 2rem to 10px to shrink the black bar */
-    padding: 10px 0; 
-    text-align: center;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: background 0.3s ease;
 }
 
-header h1 {
-    /* Removes the large default space above/below the title */
-    margin: 0; 
-    font-size: 24px;
+/* Header & Logo */
+header {
+    background-color: var(--header-bg);
+    color: #f4f1ea;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid #3e441a;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.army-logo {
+    height: 45px;
+    width: auto;
+}
+
+.header-text h1 {
+    margin: 0;
+    font-size: 18px;
     letter-spacing: 1px;
 }
 
-header p {
-    /* Shrinks the space between the title and the subtitle */
-    margin: 2px 0 0 0; 
-    font-size: 14px;
+.header-text p {
+    margin: 0;
+    font-size: 11px;
     opacity: 0.8;
 }
 
+/* Search Area */
 main {
     flex: 1;
     padding: 20px;
@@ -38,83 +77,78 @@ main {
     align-items: center;
 }
 
-footer {
-    background-color: #ecf0f1;
-    text-align: center;
-    padding: 15px;
-    font-size: 0.9rem;
-    color: #7f8c8d;
-    border-top: 1px solid #dcdde1;
-}
-
-/* Search Box */
 .search-container {
-    width: 100%;
+    position: relative;
+    width: 95%;
     max-width: 500px;
-    /* Adds a little extra space below the slim header */
-    margin: 20px 0 30px 0; 
+    margin: 30px 0;
 }
-
 
 #searchBar {
     width: 100%;
-    padding: 15px 25px;
-    font-size: 18px;
-    border: 2px solid #bdc3c7;
-    border-radius: 30px;
+    padding: 12px 45px 12px 20px;
+    font-size: 16px;
+    background-color: var(--input-bg);
+    color: var(--text-main);
+    border: 2px solid var(--border-color);
+    border-radius: 25px;
     outline: none;
-    transition: 0.3s;
+    box-sizing: border-box;
 }
 
-#searchBar:focus {
-    border-color: #27ae60;
-    box-shadow: 0 0 8px rgba(39, 174, 96, 0.2);
+#clearBtn {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 22px;
+    color: #95a5a6;
+    display: none;
 }
 
-/* Result Cards */
+/* Results */
 #resultsList {
     width: 100%;
     max-width: 600px;
 }
 
 .result-item {
-    background: white;
-    margin-bottom: 12px;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    background: var(--card-bg);
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 4px;
+    border-left: 5px solid var(--accent-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.abbr-text {
-    flex: 1;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
 .abbr-term {
     font-weight: bold;
-    color: #27ae60;
-    font-size: 1.2rem;
+    color: var(--accent-color);
+    font-size: 1.1rem;
 }
 
-.abbr-def {
-    color: #2c3e50;
-    display: block;
-    margin-top: 5px;
-}
-
-/* Copy Button */
-.copy-btn {
-    background-color: #ecf0f1;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
+/* Buttons */
+.copy-btn, #themeToggle {
+    background: var(--header-bg);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 6px 12px;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 0.8rem;
-    transition: 0.2s;
+    font-size: 12px;
 }
 
 .copy-btn:hover {
-    background-color: #bdc3c7;
+    opacity: 0.8;
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    background: var(--footer-bg);
+    font-size: 12px;
 }
