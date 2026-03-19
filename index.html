@@ -9,13 +9,20 @@
 <body>
 
     <header>
-        <h1>MILITARY ABBREVIATIONS</h1>
-        <p>Army Service Corps</p>
+        <div class="header-left">
+            <img src="https://upload.wikimedia.org/wikipedia/en/c/ca/Bangladesh_Army_Logo.png" alt="BD Army Logo" class="army-logo">
+            <div class="header-text">
+                <h1>MILITARY ABBREVIATIONS</h1>
+                <p>ST Directorate & Army Service Corps Resource</p>
+            </div>
+        </div>
+        <button id="themeToggle" onclick="toggleTheme()">🌙 Dark Mode</button>
     </header>
 
     <main>
         <div class="search-container">
-            <input type="text" id="searchBar" placeholder="Search terms" onkeyup="filterResults()">
+            <input type="text" id="searchBar" placeholder="Search (e.g. POL, STMS, ASC)..." onkeyup="filterResults()">
+            <span id="clearBtn" onclick="clearSearch()">&times;</span>
         </div>
 
         <div id="resultsList">
@@ -23,7 +30,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 Supply & Transport Directorate | <a href="mailto:stdte.ads.pol@gmail.com">Suggest a Term</a></p>
+        <p>&copy; 2026 ST Directorate | Bangladesh Army | <a href="mailto:support@example.com">Suggest Term</a></p>
     </footer>
 
     <script src="script.js"></script>
