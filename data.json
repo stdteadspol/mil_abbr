@@ -3,10 +3,10 @@
   { "term": "STMS", "def": "Supply & Transport Management System" },
   { "term": "ASC", "def": "Army Service Corps" },
   { "term": "SOP", "def": "Standard Operating Procedure" },
-  { "term": "API", def: "Application Programming Interface" },
-  { "term": "HTML", def: "HyperText Markup Language" },
-  { "term": "JSON", def: "JavaScript Object Notation" },
-  { "term": "PHP", def: "Hypertext Preprocessor" },
-  { "term": "SQL", def: "Structured Query Language" }
+  { "term": "API", "def": "Application Programming Interface" },
+  { "term": "HTML", "def": "HyperText Markup Language" },
+  { "term": "JSON", "def": "JavaScript Object Notation" },
+  { "term": "PHP", "def": "Hypertext Preprocessor" },
+  { "term": "SQL", "def": "Structured Query Language" }
 
 ]
