@@ -1,45 +1,23 @@
 const searchBar = document.getElementById('searchBar');
 const resultsList = document.getElementById('resultsList');
-let abbreviations = []; 
+const clearBtn = document.getElementById('clearBtn');
+let abbreviations = [];
 
-// Load data from data.json
+// 1. Fetch Data
 fetch('data.json')
     .then(response => response.json())
     .then(data => {
         abbreviations = data;
     })
-    .catch(error => console.error('Error loading JSON:', error));
+    .catch(err => console.error("Data load failed:", err));
 
-function displayItems(items) {
-    const query = searchBar.value.trim();
-
-    // Start with blank screen if no input
-    if (query === "") {
-        resultsList.innerHTML = "";
-        return;
-    }
-
-    // Show message if no results found
-    if (items.length === 0) {
-        resultsList.innerHTML = `<div style="color:#95a5a6; margin-top:20px;">No results found for "${query}"</div>`;
-        return;
-    }
-
-    // Generate result cards with a Copy button
-    resultsList.innerHTML = items.map(item => `
-        <div class="result-item">
-            <div class="abbr-text">
-                <span class="abbr-term">${item.term}</span>
-                <span class="abbr-def">${item.def}</span>
-            </div>
-            <button class="copy-btn" onclick="copyToClipboard('${item.term}: ${item.def}', this)">Copy</button>
-        </div>
-    `).join('');
-}
-
+// 2. Search Logic
 function filterResults() {
     const query = searchBar.value.toLowerCase().trim();
-    
+
+    // Toggle Clear Button Visibility
+    clearBtn.style.display = query.length > 0 ? "block" : "none";
+
     if (query === "") {
         displayItems([]);
         return;
@@ -49,21 +27,61 @@ function filterResults() {
         item.term.toLowerCase().includes(query) || 
         item.def.toLowerCase().includes(query)
     );
+
     displayItems(filtered);
 }
 
-// Utility function to copy text
-function copyToClipboard(text, btn) {
+// 3. Display Logic
+function displayItems(items) {
+    if (searchBar.value.trim() === "") {
+        resultsList.innerHTML = "";
+        return;
+    }
+
+    if (items.length === 0) {
+        resultsList.innerHTML = `<div style="text-align:center; padding:20px; opacity:0.6;">No matches found.</div>`;
+        return;
+    }
+
+    resultsList.innerHTML = items.map(item => `
+        <div class="result-item">
+            <div>
+                <div class="abbr-term">${item.term}</div>
+                <div class="abbr-def">${item.def}</div>
+            </div>
+            <button class="copy-btn" onclick="copyText('${item.term}: ${item.def}', this)">Copy</button>
+        </div>
+    `).join('');
+}
+
+// 4. Clear Search
+function clearSearch() {
+    searchBar.value = "";
+    filterResults();
+    searchBar.focus();
+}
+
+// 5. Copy to Clipboard
+function copyText(text, btn) {
     navigator.clipboard.writeText(text).then(() => {
-        const originalText = btn.innerText;
+        const oldText = btn.innerText;
         btn.innerText = "Copied!";
-        btn.style.backgroundColor = "#27ae60";
-        btn.style.color = "white";
-        
-        setTimeout(() => {
-            btn.innerText = originalText;
-            btn.style.backgroundColor = "";
-            btn.style.color = "";
-        }, 2000);
+        setTimeout(() => btn.innerText = oldText, 2000);
     });
+}
+
+// 6. Dark Mode Toggle
+function toggleTheme() {
+    const doc = document.documentElement;
+    const theme = doc.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    doc.setAttribute('data-theme', theme);
+    localStorage.setItem('mil_theme', theme);
+    document.getElementById('themeToggle').innerText = theme === 'dark' ? '☀️ Light' : '🌙 Dark';
+}
+
+// Load Saved Theme
+const savedTheme = localStorage.getItem('mil_theme');
+if (savedTheme) {
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    if (savedTheme === 'dark') document.getElementById('themeToggle').innerText = '☀️ Light';
 }
