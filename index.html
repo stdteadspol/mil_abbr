@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Abbreviation Finder</title>
+    <style>
+        /* Basic Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 { color: #2c3e50; }
+
+        .search-container {
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 30px;
+        }
+
+        #searchBar {
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        #searchBar:focus {
+            border-color: #3498db;
+        }
+
+        /* Results Area */
+        #resultsList {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .result-item {
+            background: white;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .result-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .abbr-term {
+            font-weight: bold;
+            color: #3498db;
+            font-size: 1.1em;
+        }
+
+        .abbr-def {
+            color: #555;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Abbreviation Directory</h1>
+
+    <div class="search-container">
+        <input type="text" id="searchBar" placeholder="Search for terms (e.g. POL, STMS)..." onkeyup="filterResults()">
+    </div>
+
+    <div id="resultsList">
+        </div>
+
+    <script>
+        // Sample Data - You can expand this list easily
+        const abbreviations = [
+            { term: "API", def: "Application Programming Interface" },
+            { term: "HTML", def: "HyperText Markup Language" },
+            { term: "JSON", def: "JavaScript Object Notation" },
+            { term: "PHP", def: "Hypertext Preprocessor" },
+            { term: "SQL", def: "Structured Query Language" }
+        ];
+
+        const resultsList = document.getElementById('resultsList');
+
+        // Function to display items
+        function displayItems(items) {
+            resultsList.innerHTML = items.map(item => `
+                <div class="result-item">
+                    <span class="abbr-term">${item.term}</span>
+                    <span class="abbr-def">- ${item.def}</span>
+                </div>
+            `).join('');
+        }
+
+        // Search logic
+        function filterResults() {
+            const query = document.getElementById('searchBar').value.toLowerCase();
+            const filtered = abbreviations.filter(item => 
+                item.term.toLowerCase().includes(query) || 
+                item.def.toLowerCase().includes(query)
+            );
+            displayItems(filtered);
+        }
+
+        // Initial load
+        displayItems(abbreviations);
+    </script>
+
+</body>
+</html>
