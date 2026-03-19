@@ -71,12 +71,20 @@ function copyText(text, btn) {
 }
 
 // 6. Dark Mode Toggle
+
 function toggleTheme() {
     const doc = document.documentElement;
-    const theme = doc.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    doc.setAttribute('data-theme', theme);
-    localStorage.setItem('mil_theme', theme);
-    document.getElementById('themeToggle').innerText = theme === 'dark' ? '☀️ Light' : '🌙 Dark';
+    // Check if it's currently dark
+    const isDark = doc.getAttribute('data-theme') === 'dark';
+    const newTheme = isDark ? 'light' : 'dark';
+    
+    // Apply the theme
+    doc.setAttribute('data-theme', newTheme);
+    localStorage.setItem('mil_theme', newTheme);
+    
+    // Update the button text
+    const btn = document.getElementById('themeToggle');
+    btn.innerText = newTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
 }
 
 // Load Saved Theme
